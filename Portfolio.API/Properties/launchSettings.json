@@ -20,7 +20,7 @@
     "Portfolio.API": {
       "commandName": "Project",
       "launchBrowser": false,
-      "launchUrl": "api/values",
+      "launchUrl": "api/project",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

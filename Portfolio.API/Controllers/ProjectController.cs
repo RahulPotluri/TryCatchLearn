@@ -10,7 +10,7 @@ namespace Portfolio.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class ProjectController : Controller
     {
         private readonly DataContext context;
 
