@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="#">Disabled</a>
+        </li>        
+      </ul>
+      <!-- Template forms, Case sensitive, need to make use of "[]" everytime -->
+      <form #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngsubmit)="login()">
+        <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" 
+                            required aria-label="Username" [(ngModel)]="model.username">
+        <input class="form-control mr-sm-2" type="text" placeholder="Password" name= "password" 
+                            required aria-label="Password" [(ngModel)]="model.password">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"  >Login</button>
+      </form>          
+</nav>
+
+<pre>
+  Form Valid : {{ loginForm.valid}}
+  Form Values : {{loginForm.value | json}}
+</pre>

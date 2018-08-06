@@ -15,8 +15,7 @@ export class ProjectComponent implements OnInit {
     this.getProjects();
   }
 
-  getProjects()
-  {
+  getProjects() {
     this.http.get('http://localhost:5000/api/project').subscribe(response => {
       this.projects = response;
     }, error => {
