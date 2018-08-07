@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'http://localhost:5000/api/auth';
+  baseUrl = 'http://localhost:5000/api/auth/';
 
 constructor(private http: HttpClient) { }
 
@@ -18,6 +18,10 @@ login(model: any) {
           const user = response;
           localStorage.setItem('token', user.token);
         }) );
+}
+
+register(model: any) {
+  return this.http.post(this.baseUrl + 'register', model);
 }
 
 }

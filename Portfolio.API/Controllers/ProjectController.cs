@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.API.Data;
@@ -20,6 +21,7 @@ namespace Portfolio.API.Controllers
         }
 
         // GET api/project
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetProjects()
         {
@@ -28,6 +30,7 @@ namespace Portfolio.API.Controllers
         }
 
         // GET api/project/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProject(int id)
         {

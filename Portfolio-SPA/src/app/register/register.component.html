@@ -1,0 +1,25 @@
+<form #registerForm="ngForm" (ngSubmit)="register()">
+  <h2 class="text-center text-primary">Sign Up</h2>
+  <hr>
+
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Username" name="username"  [(ngModel)]="model.username">
+  </div>
+
+  <!-- <div class="form-group">
+    <label for="favouriteProject">Select</label>
+    <select class="form-control" id="favouriteProject">
+      <option *ngFor= "let project of projectsFromHome" [value]="project"> {{project.name}}</option>
+    </select>
+  </div> -->
+
+  <div class="form-group">
+    <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password">
+  </div>
+
+  <div class="form-group text-center">
+    <button class="btn btn-success mr-1" type="submit" >Register</button>
+    <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
+  </div>
+  
+</form>
