@@ -57,47 +57,41 @@ namespace Portfolio.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userLoginDto)
         {
-            try
+            var userFromRepo = await _repo.Login(userLoginDto.Username.ToLower(), userLoginDto.Password);
+            if(userFromRepo == null)
             {
-                var userFromRepo = await _repo.Login(userLoginDto.Username.ToLower(), userLoginDto.Password);
-                if(userFromRepo == null)
-                {
-                    return Unauthorized();
-                }
-
-                //Claim based Authorization
-                var claims = new []
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                    new Claim(ClaimTypes.Name, userFromRepo.Username)
-                };
-
-                //To determine that valid token comes back, server needs to sign this token
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSetting:Token").Value));
-
-                //now creating signing credentials and encrypting key
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-                
-                int numberOfDaysToExpire =  Convert.ToInt32((_config.GetSection("AppSetting:JwtTokenExpiryDays").Value));
-                DateTime expiryDate = DateTime.Now.AddDays(numberOfDaysToExpire);
-                
-                //now creating a token, first is token descriptor
-                var tokenDescriptor = new SecurityTokenDescriptor{
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = expiryDate,
-                    SigningCredentials = creds
-                };
-
-                //initializing JSon web token handler
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                return Ok(new { token = tokenHandler.WriteToken(token)});
+                return Unauthorized();
             }
-            catch(Exception ex)
+
+            //Claim based Authorization
+            var claims = new []
             {
-                return BadRequest("Unidentified Exception");
-            }
+                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                new Claim(ClaimTypes.Name, userFromRepo.Username)
+            };
+
+            //To determine that valid token comes back, server needs to sign this token
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSetting:Token").Value));
+
+            //now creating signing credentials and encrypting key
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            
+            int numberOfDaysToExpire =  Convert.ToInt32((_config.GetSection("AppSetting:JwtTokenExpiryDays").Value));
+            DateTime expiryDate = DateTime.Now.AddDays(numberOfDaysToExpire);
+            
+            //now creating a token, first is token descriptor
+            var tokenDescriptor = new SecurityTokenDescriptor{
+                Subject = new ClaimsIdentity(claims),
+                Expires = expiryDate,
+                SigningCredentials = creds
+            };
+
+            //initializing JSon web token handler
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return Ok(new { token = tokenHandler.WriteToken(token)});           
+           
         }
     }
 }
