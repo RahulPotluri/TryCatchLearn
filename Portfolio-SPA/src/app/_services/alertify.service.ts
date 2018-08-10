@@ -5,6 +5,8 @@ declare let alertify: any;
 @Injectable({
   providedIn: 'root'
 })
+
+/// Wrapping external library into a service, can also be used normally
 export class AlertifyService {
 
 constructor() { }
